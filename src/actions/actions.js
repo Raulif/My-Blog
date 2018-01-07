@@ -1,12 +1,14 @@
 import axios from 'axios';
 const ROOT_URL = 'http://reduxblog.herokuapp.com/api';
 const API_KEY = '?key=raulif123';
-
-// Action types
-export const FETCH_POSTS = 'FETCH_POSTS';
-export const CREATE_POST = 'CREATE_POST';
-export const FETCH_POST = 'FETCH_POST';
-export const DELETE_POST = 'DELETE_POST';
+import {
+    FETCH_POST,
+    FETCH_POSTS,
+    CREATE_POST,
+    DELETE_POST,
+    SELECT_POST,
+    DESELECT_POST
+} from './types';
 
 // Actions
 export function fetchPosts() {
@@ -17,7 +19,6 @@ export function fetchPosts() {
         payload: request
     }
 }
-
 
 export function createPost(values, callback) {
     const request = axios.post(`${ROOT_URL}/posts${API_KEY}`, values)
@@ -46,6 +47,20 @@ export function deletePost(id, callback) {
 
     return {
         type: DELETE_POST,
+        payload: id
+    }
+}
+
+export function selectPost(id) {
+    return {
+        type: SELECT_POST,
+        payload: id
+    }
+}
+
+export function deselectPost(id){
+    return {
+        type: DESELECT_POST,
         payload: id
     }
 }
