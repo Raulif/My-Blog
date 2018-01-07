@@ -8,15 +8,15 @@ import { createSelector } from 'reselect';
 // for this calculation
 
 const postsSelector = state => state.posts
-const selectedPostsSelector = state => state.selectedPostIds
+const selectedPostsSelector = state => state.selectedPostsIds
 
-const getPosts = (posts, selectedPostIds) => {
+const getPosts = (posts, selectedPostsIds) => {
     // lodash filter() works like the js filter method for arrays
     // We pass the array of posts and on each post, we check if its id matches with
-    // those contained on the array selectedPostIds
+    // those contained on the array selectedPostsIds
     const selectedPosts = _.filter(
         posts,
-        post => _.contains(selectedPostIds, post.id)
+        post => _.contains(selectedPostsIds, post.id)
     );
 
     // at the end we return the filtered selectedPosts
@@ -25,7 +25,7 @@ const getPosts = (posts, selectedPostIds) => {
 
 export default createSelector(
     // first we pass a number of 'selecting state functions':
-    postSelector, // picks off a piece of state
+    postsSelector, // picks off a piece of state
     selectedPostsSelector, // picks off a piece of state
     // last argument is *always* the function that has our select logic
     getPosts

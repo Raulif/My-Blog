@@ -9,31 +9,37 @@ import SelectedPostsList from './selected_posts_list';
 class PostsList extends Component {
 
     componentDidMount() {
+        // We fetch the global object of posts on mount.
         this.props.fetchPosts();
     }
 
-    renderPosts(post) {
-            return(
-                <li className="list-group-item" key={post.id}>
-                    <input
-                        type="checkbox"
-                        checked={_.contains(this.props.selectedPostIds, post.id)}
-                        onChange={this.handlePostSelect.bind(this, post)}
-                    />
-                    <Link to={`/posts/${post.id}`}>{post.title}</Link>
-                </li>
-            )
-        })
-    }
-
     handlePostSelect({ id }, event) {
+        // action creators for selecting and deselecting the post are fired when
+        // the content of the checkbox input changes (...when it is clicked)
         const { selectPost, deselectPost } = this.props;
-        event.target.checked ? selectPost(id) : deselectPost(id)
+        event.target.checked ? selectPost(id) : deselectPost(id);
     }
 
+    renderPosts(post) {
+        // checked is active if the id of the post is contained in the array of
+        // selected posts
+        return(
+            <li className="list-group-item" key={post.id}>
+                <input
+                    type="checkbox"
+                    checked={_.contains(this.props.selectedPostsIds, post.id)}
+                    onChange={this.handlePostSelect.bind(this, post)}
+                />
+                <Link to={`/posts/${post.id}`}>{post.title}</Link>
+            </li>
+        )
+    }
 
 
     render() {
+        // we map the object of posts with lodash-map. The renderPosts function
+        // is run on each element (post) of the object. Each post is passed to
+        // the function.
         return(
             <div>
                 <div className="text-xs-right">
@@ -49,4 +55,4 @@ class PostsList extends Component {
     }
 }
 
-export default connect(({posts, selectedPostIds}) => ({posts, selectedPostIds}), actions)(PostsList);
+export default connect(({posts, selectedPostsIds}) => ({posts, selectedPostsIds}), actions)(PostsList);

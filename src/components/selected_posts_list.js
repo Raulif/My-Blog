@@ -23,4 +23,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(SelectedPosts)
+export default connect(mapStateToProps)(SelectedPostsList)
